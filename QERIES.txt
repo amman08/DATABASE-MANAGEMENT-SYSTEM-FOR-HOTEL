@@ -1,0 +1,942 @@
+SQL> connect system
+Enter password:
+Connected.
+SQL> create user dbms identified by dbms123;
+
+User created.
+
+SQL> grant all privileges to dbms;
+
+Grant succeeded.
+
+SQL> connect dbms
+Enter password:
+Connected.
+SQL> commit;
+
+Commit complete.
+
+
+SQL> create table customer_details (customer_ID number(10) primary key,fname varchar(10),lname varchar(10),phone_no number(15),DOB date,age int , proof_ID number(15),gender char(10));
+
+Table created.
+
+SQL> desc customer_details
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMER_ID                               NOT NULL NUMBER(10)
+ FNAME                                              VARCHAR2(10)
+ LNAME                                              VARCHAR2(10)
+ PHONE_NO                                           NUMBER(15)
+ DOB                                                DATE
+ AGE                                                NUMBER(38)
+ PROOF_ID                                           NUMBER(15)
+ GENDER                                             CHAR(10)
+
+
+SQL> create table booking_table( booking_days  int, date_of_booking  date,customer_ID not null, FOREIGN KEY (customer_ID) REFERENCES customer_details(customer_ID));
+
+Table created.
+
+SQL> desc booking_table;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOKING_DAYS                                       NUMBER(38)
+ DATE_OF_BOOKING                                    DATE
+ CUSTOMER_ID                               NOT NULL NUMBER(10)
+
+SQL> create table hotel_table (hotel_name varchar2(10) not null,hotel_ID varchar2(5) primary key,address varchar2(10) not null,hotel_contact number(15));
+
+Table created.
+
+SQL> desc hotel_table;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HOTEL_NAME                                NOT NULL VARCHAR2(10)
+ HOTEL_ID                                  NOT NULL VARCHAR2(5)
+ ADDRESS                                   NOT NULL VARCHAR2(10)
+ HOTEL_CONTACT                                      NUMBER(15)
+ 
+SQL> create table  room_table(room_id varchar2(5) primary key,room_type varchar2(5) default 'NAC',no_beds int not null,check_in date,check_out date,customer_ID ,FOREIGN KEY (customer_ID) REFERENCES customer_details(customer_ID),hotel_ID not null,FOREIGN KEY (hotel_ID) REFERENCES hotel_table(hotel_ID));
+
+Table created.
+
+SQL> desc room_table;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROOM_ID                                   NOT NULL VARCHAR2(5)
+ ROOM_TYPE                                          VARCHAR2(5)
+ NO_BEDS                                   NOT NULL NUMBER(38)
+ CHECK_IN                                           DATE
+ CHECK_OUT                                          DATE
+ CUSTOMER_ID                                        NUMBER(10)
+ HOTEL_ID                                  NOT NULL VARCHAR2(5)
+SQL>  create table payment_details ( patment_ID number(10) primary key, payment_type varchar2(10) default 'cash',date_of_payment date,amount int, customer_ID,FOREIGN KEY (customer_ID) REFERENCES customer_details(customer_ID));
+
+Table created.
+
+SQL> desc payment_details;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PATMENT_ID                                NOT NULL NUMBER(10)
+ PAYMENT_TYPE                                       VARCHAR2(10)
+ DATE_OF_PAYMENT                                    DATE
+ CUSTOMER_ID                                        NUMBER(10)
+ AMOUNT                                             NUMBER(38)
+
+
+
+##################################################################################################
+
+SQL> select * from customer_details;
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201901 amman      naidu      7036652677 10-DEC-97         23      25588
+M
+
+     201902 hemanth    karanam    7207105192 08-SEP-96         22      25738
+M
+
+     201903 sai        krishna    8945875215 15-JUL-98         52      15838
+M
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201904 vijay      krishna    5895872546 19-DEC-00         19      12588
+M
+
+     201905 sahithi    paul       7858964525 25-DEC-92         28      25987
+F
+
+     201906 chandra    babu       7858948925 25-JAN-92         28      45987
+M
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201907 akhil      reddy      9858974826 25-MAR-92         28      49387
+M
+
+     201908 balaji     appari     8019660694 29-JUL-92         29      45827
+M
+
+     201909 akhil      kumar      9441391141 29-MAR-89         40      45852
+M
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201910 sun        samson     9441391139 29-MAR-79         30      45982
+M
+
+     201911 saradhi    yellapu    9441891139 29-NOV-79         30      87982
+M
+
+     201912 yamsi      krishna    8978264515 29-NOV-80         39      87988
+M
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201913 sudheer    killi      8978155318 19-FEB-58         58      87987
+M
+
+     201914 ramesh     shasu      8978155317 15-APR-54         51      87998
+f
+
+     201915 ram        bhanu      8978155567 16-APR-89         45      87996
+f
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201916 laxhmi     subbha     8978155523 01-MAY-98         45      85446
+f
+
+     201917 meher      anusha     8976545523 14-MAR-91         47      85445
+f
+
+     201918 aammu      prai       9866053124 11-JUL-24         54      25369
+f
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201919 akmak      akshtha    9866053192 19-JUN-69         38      82586
+f
+
+     201920 apriprila  neeharika  8976545956 23-JUN-65         56      85328
+f
+
+
+20 rows selected.
+##################################################################################################################################
+BOOKING_DAYS DATE_OF_B CUSTOMER_ID
+------------ --------- -----------
+           9 26-JUL-19      201901
+           2 27-JUL-19      201902
+          20 27-JUL-19      201903
+          18 25-JUL-19      201904
+           2 26-JUL-19      201905
+           5 26-JUL-19      201906
+           3 26-JUL-19      201907
+           4 27-JUL-19      201908
+          40 26-JUL-19      201909
+           1 26-JUL-19      201910
+           4 27-JUL-19      201911
+
+BOOKING_DAYS DATE_OF_B CUSTOMER_ID
+------------ --------- -----------
+           8 27-JUL-19      201912
+          21 26-JUL-19      201913
+          11 25-JUL-19      201914
+          18 26-JUL-19      201915
+          25 27-JUL-19      201916
+           7 25-JUL-19      201917
+           5 27-JUL-19      201918
+           4 25-JUL-19      201919
+           4 26-JUL-19      201920
+
+20 rows selected.
+
+#####################################################################################################################
+SQL> select * from hotel_table;
+
+HOTEL_NAME HOTEL ADDRESS    HOTEL_CONTACT
+---------- ----- ---------- -------------
+hotel1     H1    vizag         8019660694
+hotel2     H2    hyderabad     9505526999
+hotel3     H3    hyderabad     9705526999
+hotel4     H4    bangalore     9703483549
+#############################################################################################################################
+SQL> select * from room_table;
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+----- ----- ---------- --------- --------- ----------- -----
+101   AC             2 28-JUL-19 05-AUG-19      201901 H1
+102   AC             2 28-JUL-19 29-JUL-19      201902 H1
+103   AC             2                                 H1
+104   AC             3                                 H1
+105   NAC            3                                 H1
+106   NAC            2                                 H1
+107   NAC            2                                 H1
+108   NAC            4                                 H1
+109   AC             4                                 H1
+110   NAC            2 20-JUL-19 09-AUG-19      201903 H1
+201   AC             2 20-JUL-19 07-AUG-19      201904 H2
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+----- ----- ---------- --------- --------- ----------- -----
+202   AC             1 29-JUL-19 30-JUL-19      201905 H2
+203   NAC            2 30-JUL-19 04-AUG-19      201906 H2
+204   AC             4 31-JUL-19 02-AUG-19      201907 H2
+205   AC             2 30-JUL-19 02-AUG-19      201908 H2
+206   AC             4 21-JUL-19 30-AUG-19      201909 H2
+207   AC             3 01-AUG-19 02-AUG-19      201910 H2
+208   NAC            5                                 H2
+209   AC             5                                 H2
+210   AC             2                                 H2
+301   AC             2                                 H3
+302   AC             3                                 H3
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+----- ----- ---------- --------- --------- ----------- -----
+303   AC             3                                 H3
+304   NAC            4                                 H3
+305   NAC            2                                 H3
+306   AC             3 01-JUL-19 02-AUG-19      201911 H3
+307   AC             2 31-JUL-19 08-AUG-19      201912 H3
+308   AC             2 31-JUL-19 20-AUG-19      201913 H3
+309   AC             2 31-JUL-19 10-AUG-19      201914 H3
+310   AC             2 31-JUL-19 18-AUG-19      201915 H3
+401   AC             2 25-JUL-19 21-AUG-19      201916 H4
+402   AC             2 29-JUL-19 05-AUG-19      201917 H4
+403   AC             2 02-AUG-19 06-AUG-19      201918 H4
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+----- ----- ---------- --------- --------- ----------- -----
+404   NAC            2 01-AUG-19 04-AUG-19      201919 H4
+405   NAC            3 27-JUL-19 31-JUL-19      201920 H4
+406   NAC            4                                 H4
+407   NAC            4                                 H4
+408   AC             2                                 H4
+409   AC             2                                 H4
+410   AC             4                                 H4
+
+40 rows selected.
+###################################################################################################
+
+SQL> select * from payment_details;
+
+PATMENT_ID PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- ---------- --------- ----------- ----------
+         1 cash       26-JUN-19      201901        900
+         2 card       27-JUN-19      201902        200
+         3 cash       27-JUN-19      201903       2000
+         4 card       25-JUN-19      201904       1800
+         5 online     26-JUN-19      201905        200
+         6 online     26-JUN-19      201906        500
+         7 online     26-JUN-19      201907        300
+         8 online     27-JUN-19      201908        400
+         9 online     26-JUN-19      201909       4000
+        10 cash       27-JUN-19      201910        100
+        11 card       27-JUN-19      201911        400
+
+PATMENT_ID PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- ---------- --------- ----------- ----------
+        12 cash       27-JUN-19      201912        800
+        13 online     26-JUN-19      201913       2100
+        14 online     25-JUN-19      201914       1100
+        15 cash       26-JUN-19      201915       1800
+        16 card       27-JUN-19      201916       2500
+        17 card       25-JUN-19      201917        700
+        18 cash       27-JUN-19      201918        500
+        19 online     25-JUN-19      201919        400
+        20 online     26-JUN-19      201920        400
+20 rows selected.
+###################################################################################################
+
+1)TOTAL NUMBER OF ROOMS IN EACH HOTEL
+SQL> select hotel_id,count(room_id) from room_table group by hotel_id;
+
+HOTEL COUNT(ROOM_ID)
+----- --------------
+H3                10
+H4                10
+H1                10
+H2                10
+
+2)TOTAL NO OF UNFILLED ROOMS IN EACH HOTEL
+
+SQL> select count(room_id),hotel_id from room_table where customer_id is null group by hotel_id;
+
+COUNT(ROOM_ID) HOTEL
+-------------- -----
+             5 H3
+             5 H4
+             7 H1
+             3 H2
+
+3)TOTAL NO OF FILLED ROOMS IN EACH HOTEL
+
+SQL> select count(room_id),hotel_id from room_table where customer_id is not null group by hotel_id;
+
+COUNT(ROOM_ID) HOTEL
+-------------- -----
+             5 H3
+             5 H4
+             3 H1
+             7 H2
+4)DISPLAY THE CUSTOMER DETAILS WITH NAME HAVING 'al'
+
+SQL> select * from customer_details where fname like '%al%';
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201908 balaji     appari     8019660694 29-JUL-92         29      45827
+M
+
+5)DISPLAY THE AVG,max and min AGE OF CUSTOMERS WHO ARE BOOKING HOTELS
+
+SQL> select avg(age),max(age),min(age) from CUSTOMER_DETAILS;
+
+  AVG(AGE)   MAX(AGE)   MIN(AGE)
+---------- ---------- ----------
+      38.1         58         19
+
+6)display the room_id and hotel_id with in the hotels having 3 beds in the room
+
+SQL> select room_id,hotel_id from room_table where NO_BEDS=3;
+
+ROOM_ HOTEL
+----- -----
+104   H1
+105   H1
+207   H2
+302   H3
+303   H3
+306   H3
+405   H4
+
+7 rows selected.
+
+7)display the room_id and hotel_id with in the hotels having 3 beds in the room and which are Non AC
+
+SQL> select room_id,hotel_id from room_table where NO_BEDS=3 and room_type='NAC';
+
+ROOM_ HOTEL
+----- -----
+105   H1
+405   H4
+
+8)Display the names of custmers who booked for more than 15 days
+SQL> select fname,lname from customer_details where customer_id in(select customer_id from booking_table where booking_days>15);
+
+FNAME      LNAME
+---------- ----------
+sai        krishna
+vijay      krishna
+akhil      kumar
+sudheer    killi
+ram        bhanu
+laxhmi     subbha
+
+6 rows selected.
+
+9)join roomtable and payment table
+
+SQL> select * from room_table join payment_details on room_table.customer_id=payment_details.customer_id;
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+101   AC             2 28-JUL-19 05-AUG-19      201901 H1             1
+cash       26-JUN-19      201901        900
+
+102   AC             2 28-JUL-19 29-JUL-19      201902 H1             2
+card       27-JUN-19      201902        200
+
+110   NAC            2 20-JUL-19 09-AUG-19      201903 H1             3
+cash       27-JUN-19      201903       2000
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+201   AC             2 20-JUL-19 07-AUG-19      201904 H2             4
+card       25-JUN-19      201904       1800
+
+202   AC             1 29-JUL-19 30-JUL-19      201905 H2             5
+online     26-JUN-19      201905        200
+
+203   NAC            2 30-JUL-19 04-AUG-19      201906 H2             6
+online     26-JUN-19      201906        500
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+204   AC             4 31-JUL-19 02-AUG-19      201907 H2             7
+online     26-JUN-19      201907        300
+
+205   AC             2 30-JUL-19 02-AUG-19      201908 H2             8
+online     27-JUN-19      201908        400
+
+206   AC             4 21-JUL-19 30-AUG-19      201909 H2             9
+online     26-JUN-19      201909       4000
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+207   AC             3 01-AUG-19 02-AUG-19      201910 H2            10
+cash       27-JUN-19      201910        100
+
+306   AC             3 01-JUL-19 02-AUG-19      201911 H3            11
+card       27-JUN-19      201911        400
+
+307   AC             2 31-JUL-19 08-AUG-19      201912 H3            12
+cash       27-JUN-19      201912        800
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+308   AC             2 31-JUL-19 20-AUG-19      201913 H3            13
+online     26-JUN-19      201913       2100
+
+309   AC             2 31-JUL-19 10-AUG-19      201914 H3            14
+online     25-JUN-19      201914       1100
+
+310   AC             2 31-JUL-19 18-AUG-19      201915 H3            15
+cash       26-JUN-19      201915       1800
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+401   AC             2 25-JUL-19 21-AUG-19      201916 H4            16
+card       27-JUN-19      201916       2500
+
+402   AC             2 29-JUL-19 05-AUG-19      201917 H4            17
+card       25-JUN-19      201917        700
+
+403   AC             2 02-AUG-19 06-AUG-19      201918 H4            18
+cash       27-JUN-19      201918        500
+
+
+ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL PATMENT_ID
+----- ----- ---------- --------- --------- ----------- ----- ----------
+PAYMENT_TY DATE_OF_P CUSTOMER_ID     AMOUNT
+---------- --------- ----------- ----------
+404   NAC            2 01-AUG-19 04-AUG-19      201919 H4            19
+online     25-JUN-19      201919        400
+
+405   NAC            3 27-JUL-19 31-JUL-19      201920 H4            20
+online     26-JUN-19      201920        400
+
+
+20 rows selected.
+
+10)display the check out date and payment date .
+
+SQL> select check_out,date_of_payment from room_table join payment_details on room_table.customer_id=payment_details.customer_id;
+
+CHECK_OUT DATE_OF_P
+--------- ---------
+05-AUG-19 26-JUN-19
+29-JUL-19 27-JUN-19
+09-AUG-19 27-JUN-19
+07-AUG-19 25-JUN-19
+30-JUL-19 26-JUN-19
+04-AUG-19 26-JUN-19
+02-AUG-19 26-JUN-19
+02-AUG-19 27-JUN-19
+30-AUG-19 26-JUN-19
+02-AUG-19 27-JUN-19
+02-AUG-19 27-JUN-19
+
+CHECK_OUT DATE_OF_P
+--------- ---------
+08-AUG-19 27-JUN-19
+20-AUG-19 26-JUN-19
+10-AUG-19 25-JUN-19
+18-AUG-19 26-JUN-19
+21-AUG-19 27-JUN-19
+05-AUG-19 25-JUN-19
+06-AUG-19 27-JUN-19
+04-AUG-19 25-JUN-19
+31-JUL-19 26-JUN-19
+
+20 rows selected.
+
+11)dispaly the name of customer who booked room no 201;
+
+SQL> select * from customer_details where customer_id in (select customer_id from room_table where room_id='202');
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER
+----------
+     201905 sahithi    paul       7858964525 25-DEC-92         28      25987
+F
+
+12)display the total amount of collected by each hotel branch
+
+SQL> select hotel_id,sum(amount) as total from room_table join payment_details on room_table.customer_ID=payment_details.customer_ID group by hotel_id;
+
+HOTEL      TOTAL
+----- ----------
+H3          6200
+H4          4500
+H1          3100
+H2          7300
+
+13)get customer id of females who booked hotel in hyderabad
+
+SQL> select address,customer_id from hotel_table join room_table on hotel_table.hotel_id=room_table.hotel_id where customer_ID in (select customer_ID from customer_details where gender='f'and address='hyderabad');
+
+ADDRESS    CUSTOMER_ID
+---------- -----------
+hyderabad       201914
+hyderabad       201915
+
+14)SQL statement to know how many customers have listed their names.
+SQL> select count (*) from customer_details;
+
+  COUNT(*)
+----------
+        20
+15)query to know about the max amount paid
+SQL> select max(amount) from payment_details;
+
+MAX(AMOUNT)
+-----------
+       4000
+16) query to know about the min amount paid 
+SQL> select min(amount) from payment_details;
+
+MIN(AMOUNT)
+-----------
+        100
+17) SQL statement to find the purchase amount ordered by the each customer with their ID and purchase amount.
+SQL> select customer_id, max(amount) from payment_details group by customer_id;
+
+CUSTOMER_ID MAX(AMOUNT)
+----------- -----------
+     201905         200
+     201910         100
+     201902         200
+     201915        1800
+     201920         400
+     201907         300
+     201911         400
+     201916        2500
+     201917         700
+     201919         400
+     201908         400
+
+CUSTOMER_ID MAX(AMOUNT)
+----------- -----------
+     201901         900
+     201906         500
+     201903        2000
+     201909        4000
+     201912         800
+     201913        2100
+     201914        1100
+     201918         500
+     201904        1800
+18)statement to find the highest payment amount on a date '2012-08-17' for each salesman with their ID.
+SQL> select customer_id, max(amount) From payment_details where date_of_payment = '27-jun-19' Group by customer_id;
+
+CUSTOMER_ID MAX(AMOUNT)
+----------- -----------
+     201910         100
+     201902         200
+     201911         400
+     201916        2500
+     201908         400
+     201903        2000
+     201912         800
+     201918         500
+19) getting max amount for each customer with their amount and customer id above the given certain amount.
+SQL> select customer_id,date_of_payment, max(amount) from payment_details GROUP BY customer_id,date_of_payment having max(amount)>1500;
+
+CUSTOMER_ID DATE_OF_P MAX(AMOUNT)
+----------- --------- -----------
+     201904 25-JUN-19        1800
+     201909 26-JUN-19        4000
+     201916 27-JUN-19        2500
+     201903 27-JUN-19        2000
+     201913 26-JUN-19        2100
+     201915 26-JUN-19        1800
+20)getting the customer id and amount paid by the customer within the range and the amount paid by them above 500.
+SQL> select customer_id, max(amount) from payment_details where customer_id between 201905 and 201915 group by customer_id having max(amount)>500;
+
+CUSTOMER_ID MAX(AMOUNT)
+----------- -----------
+     201915        1800
+     201909        4000
+     201912         800
+     201913        2100
+     201914        1100
+ 21)Write a SQL statement that counts all orders for a date which is given by us.
+SQL> select count(*) from payment_details where date_of_payment='25-jun-19';
+
+  COUNT(*)
+----------
+         4
+22)Write a query that counts the number of customer with their order date and ID registering orders for each day.
+SQL> select date_of_payment,customer_id,count(*) from payment_details group by date_of_payment,customer_id;
+
+DATE_OF_P CUSTOMER_ID   COUNT(*)
+--------- ----------- ----------
+26-JUN-19      201906          1
+26-JUN-19      201920          1
+27-JUN-19      201903          1
+26-JUN-19      201907          1
+27-JUN-19      201910          1
+25-JUN-19      201919          1
+25-JUN-19      201914          1
+26-JUN-19      201901          1
+27-JUN-19      201902          1
+26-JUN-19      201905          1
+27-JUN-19      201916          1
+
+DATE_OF_P CUSTOMER_ID   COUNT(*)
+--------- ----------- ----------
+25-JUN-19      201917          1
+26-JUN-19      201909          1
+27-JUN-19      201911          1
+27-JUN-19      201912          1
+27-JUN-19      201908          1
+26-JUN-19      201915          1
+25-JUN-19      201904          1
+26-JUN-19      201913          1
+27-JUN-19      201918          1
+
+23)get the names of the customer where no of booking days is maximum
+SQL> select lname,fname from customer_details where customer_id in (select customer_id from booking_table where booking_days in (select max(booking_days) from booking_table));
+
+LNAME      FNAME
+---------- ----------
+kumar      akhil
+
+24)get the details of  customer with respect to the check in dates by orderly way
+
+SQL> select * from customer_details join room_table on customer_details.customer_id=room_table.customer_id order by check_in;
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201911 saradhi    yellapu    9441891139 29-NOV-79         30      87982
+M          306   AC             3 01-JUL-19 02-AUG-19      201911 H3
+
+     201903 sai        krishna    8945875215 15-JUL-98         52      15838
+M          110   NAC            2 20-JUL-19 09-AUG-19      201903 H1
+
+     201904 vijay      krishna    5895872546 19-DEC-00         19      12588
+M          201   AC             2 20-JUL-19 07-AUG-19      201904 H2
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201909 akhil      kumar      9441391141 29-MAR-89         40      45852
+M          206   AC             4 21-JUL-19 30-AUG-19      201909 H2
+
+     201916 laxhmi     subbha     8978155523 01-MAY-98         45      85446
+f          401   AC             2 25-JUL-19 21-AUG-19      201916 H4
+
+     201920 apriprila  neeharika  8976545956 23-JUN-65         56      85328
+f          405   NAC            3 27-JUL-19 31-JUL-19      201920 H4
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201901 amman      naidu      7036652677 10-DEC-97         23      25588
+M          101   AC             2 28-JUL-19 05-AUG-19      201901 H1
+
+     201902 hemanth    karanam    7207105192 08-SEP-96         22      25738
+M          102   AC             2 28-JUL-19 29-JUL-19      201902 H1
+
+     201917 meher      anusha     8976545523 14-MAR-91         47      85445
+f          402   AC             2 29-JUL-19 05-AUG-19      201917 H4
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201905 sahithi    paul       7858964525 25-DEC-92         28      25987
+f          202   AC             1 29-JUL-19 30-JUL-19      201905 H2
+
+     201908 balaji     appari     8019660694 29-JUL-92         29      45827
+M          205   AC             2 30-JUL-19 02-AUG-19      201908 H2
+
+     201906 chandra    babu       7858948925 25-JAN-92         28      45987
+M          203   NAC            2 30-JUL-19 04-AUG-19      201906 H2
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201915 ram        bhanu      8978155567 16-APR-89         45      87996
+f          310   AC             2 31-JUL-19 18-AUG-19      201915 H3
+
+     201914 ramesh     shasu      8978155317 15-APR-54         51      87998
+f          309   AC             2 31-JUL-19 10-AUG-19      201914 H3
+
+     201907 akhil      reddy      9858974826 25-MAR-92         28      49387
+M          204   AC             4 31-JUL-19 02-AUG-19      201907 H2
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201912 yamsi      krishna    8978264515 29-NOV-80         39      87988
+M          307   AC             2 31-JUL-19 08-AUG-19      201912 H3
+
+     201913 sudheer    killi      8978155318 19-FEB-58         58      87987
+M          308   AC             2 31-JUL-19 20-AUG-19      201913 H3
+
+     201910 sun        samson     9441391139 29-MAR-79         30      45982
+M          207   AC             3 01-AUG-19 02-AUG-19      201910 H2
+
+
+CUSTOMER_ID FNAME      LNAME        PHONE_NO DOB              AGE   PROOF_ID
+----------- ---------- ---------- ---------- --------- ---------- ----------
+GENDER     ROOM_ ROOM_    NO_BEDS CHECK_IN  CHECK_OUT CUSTOMER_ID HOTEL
+---------- ----- ----- ---------- --------- --------- ----------- -----
+     201919 akmak      akshtha    9866053192 19-JUN-69         38      82586
+f          404   NAC            2 01-AUG-19 04-AUG-19      201919 H4
+
+     201918 aammu      prai       9866053124 11-JUL-24         54      25369
+f          403   AC             2 02-AUG-19 06-AUG-19      201918 H4
+25)get the hotel address where no of booking days is max;
+
+SQL> select  address from hotel_table where hotel_id in(select hotel_ID from room_table where customer_ID in (select customer_ID from booking_table where booking_days in (select max(booking_days) from booking_table)));
+
+ADDRESS
+----------
+hyderabad
+
+26)get the names of customer names who are cash payers and female.
+
+
+SQL> select gender,lname,fname from customer_details join payment_details on customer_details.customer_id=payment_details.customer_id where gender='f' and payment_type='cash';
+
+GENDER     LNAME      FNAME
+---------- ---------- ----------
+f          bhanu      ram
+f          prai       aammu
+
+27)get the empty rooms in hyderabad hotel with room name and room type;
+
+
+SQL> select hotel_name,room_type,room_id,no_beds from room_table join hotel_table on room_table.hotel_id=hotel_table.hotel_id where customer_id is null and address='hyderabad';
+
+HOTEL_NAME ROOM_ ROOM_    NO_BEDS
+---------- ----- ----- ----------
+hotel2     NAC   208            5
+hotel2     AC    209            5
+hotel2     AC    210            2
+hotel3     AC    301            2
+hotel3     AC    302            3
+hotel3     AC    303            3
+hotel3     NAC   304            4
+hotel3     NAC   305            2
+
+8 rows selected.
+
+28)select the total amount received by the total hotels on a particular date
+SQL> select sum(amount) from payment_details where date_of_payment='26-jun-2019';
+
+SUM(AMOUNT)
+-----------
+      10200
+
+29)get the amont recevied by any brach at the particular date.
+
+
+SQL> select sum(amount) from payment_details where customer_id in (select customer_id from room_table where hotel_id in (select hotel_id1 from hotel_table where address='bangalore'and date_of_payment='26-jun-2019'));
+
+SUM(AMOUNT)
+-----------
+        400
+30)get the rooms which are free after a particular date
+
+select room_id from room_table where check_out >'30-aug-2019' or customer_id is null;
+ROOM_
+-----
+103
+104
+105
+106
+107
+108
+109
+208
+209
+210
+301
+
+ROOM_
+-----
+302
+303
+304
+305
+406
+407
+408
+409
+410
+
+31)select customer _id where amount  paid is greater than avg amount paid.
+
+SQL> select customer_id from payment_details where amount> (select avg(amount) from payment_details);
+
+CUSTOMER_ID
+-----------
+     201903
+     201904
+     201909
+     201913
+     201914
+     201915
+     201916
+32)get all the customer id where amount paid is greater than any customer.(using all)
+
+SQL> select customer_id from payment_details where amount> ALL (select amount from payment_details where customer_id =201903);
+
+CUSTOMER_ID
+-----------
+     201913
+     201916
+     201909
+
+33)get all the customer id where amount paid is greater than any customer.(using any)
+
+SQL> select customer_id from payment_details where amount> ANY (select amount from payment_details where customer_id =201903);
+
+CUSTOMER_ID
+-----------
+     201909
+     201916
+     201913
+
+34)get all the customer_id that are in customer_details as well as in payment _details.(using exists operator)
+
+SQL> select lname,fname from customer_details where exists (select * from payment_details where customer_id=customer_id);
+
+LNAME      FNAME
+---------- ----------
+naidu      amman
+karanam    hemanth
+krishna    sai
+krishna    vijay
+paul       sahithi
+babu       chandra
+reddy      akhil
+appari     balaji
+kumar      akhil
+samson     sun
+yellapu    saradhi
+
+LNAME      FNAME
+---------- ----------
+krishna    yamsi
+killi      sudheer
+shasu      ramesh
+bhanu      ram
+subbha     laxhmi
+anusha     meher
+prai       aammu
+akshtha    akmak
+neeharika  apriprila
+
+20 rows selected.
+
+35)Get sum of total amount the particular date where amount collected at the particular date is greater than 1000
+
+
+SQL> select date_of_payment,sum(amount) from payment_details having sum(amount)>1000 group by date_of_payment;
+
+DATE_OF_P SUM(AMOUNT)
+--------- -----------
+25-JUN-19        4000
+27-JUN-19        6900
+26-JUN-19       10200
+
